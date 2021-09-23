@@ -1,0 +1,57 @@
+service: nerdearla-apis
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage}
+  region: ${opt:region}
+  apiGateway:
+    apiKeys:
+      - nerdearla-apis-${opt:stage}
+
+functions:
+  getBuyer:
+    handler: handler.getBuyer
+    events:
+      - http:
+          method: get
+          path: buyers/{buyerId}
+          private: true
+
+  getSeller:
+    handler: handler.getSeller
+    events:
+      - http:
+          method: get
+          path: sellers/{sellerId}
+          private: true
+
+  getQr:
+    handler: handler.getQr
+    events:
+      - http:
+          method: get
+          path: qrs/{qrId}
+          private: true
+
+  getPaymentMethod:
+    handler: handler.getPaymentMethod
+    events:
+      - http:
+          method: get
+          path: paymentMethods/{paymentMethodId}
+          private: true
+
+  authorizePayment:
+    handler: handler.authorizePayment
+    events:
+      - http:
+          method: post
+          path: authorizations
+          private: true
+
+plugins:
+  - serverless-offline

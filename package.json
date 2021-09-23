@@ -1,0 +1,18 @@
+{
+  "name": "nerdearla-apis",
+  "version": "1.0.0",
+  "description": "Nerdearla apis",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy-dev-msma-sandbox": "serverless deploy --stage dev --region us-east-1 --aws-profile msma-sandbox"
+  },
+  "author": "msanmartin",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-offline": "^8.2.0"
+  },
+  "dependencies": {
+    "uuidv4": "^6.2.12"
+  }
+}
