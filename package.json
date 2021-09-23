@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-dev-msma-sandbox": "serverless deploy --stage dev --region us-east-1 --aws-profile msma-sandbox",
+    "deploy-dev-msma-sandbox": "serverless deploy --verbose --stage dev --region us-east-1 --aws-profile msma-sandbox",
     "local": "serverless offline --stage dev --region us-east-1"
   },
   "author": "msanmartin",
