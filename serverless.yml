@@ -42,7 +42,7 @@ functions:
     events:
       - http:
           method: get
-          path: paymentMethods/{paymentMethodId}
+          path: buyers/{buyerId}/paymentMethods/token/{paymentMethodToken}
           private: true
 
   authorizePayment:
@@ -51,6 +51,14 @@ functions:
       - http:
           method: post
           path: authorizations
+          private: true
+
+  validateFraud:
+    handler: handler.validateFraud
+    events:
+      - http:
+          method: post
+          path: fraud
           private: true
 
 plugins:
