@@ -17,7 +17,8 @@ const getBuyerById = (event) => {
     return httpResponse({
         id: buyerId,
         enabled: true,
-        identification: "123444459",
+        identification: "12345678",
+        gender: "M",
         name: "Example",
         lastName: "Buyer",
         email: "a@buyer.com",
@@ -39,6 +40,7 @@ const getSellerById = (event) => {
     return httpResponse({
         id: sellerId,
         identification: "1234444511",
+        enabled: true,
         name: "Example",
         lastName: "Seller",
         email: "a@seller.com",
@@ -70,7 +72,8 @@ const getPaymentMethod = (event) => {
         id: 1,
         enabled: true,
         securityCode: "123",
-        token: paymentMethodToken
+        token: paymentMethodToken,
+        type: "CREDIT"
     })
 }
 
