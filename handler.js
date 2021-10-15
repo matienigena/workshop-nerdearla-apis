@@ -2,9 +2,13 @@
 
 const { uuid } = require('uuidv4')
 
-const httpResponse = (body) => {
+const ERROR_IDS = ['400', '404', '422', '500']
+
+const isErrorId = (id) => ERROR_IDS.includes(id)
+
+const httpResponse = (body, statusCode = 200) => {
     return {
-        statusCode: 200,
+        statusCode,
         body: JSON.stringify(body)
     }
 }
@@ -14,6 +18,11 @@ const getBody = (event) => JSON.parse(event.body)
 
 const getBuyerById = (event) => {
     const buyerId = getPathParameter(event, 'buyerId')
+
+    if (isErrorId(buyerId)) {
+        return httpResponse({}, buyerId)
+    }
+
     return httpResponse({
         id: buyerId,
         enabled: true,
@@ -37,6 +46,11 @@ const getBuyerById = (event) => {
 
 const getSellerById = (event) => {
     const sellerId = getPathParameter(event, 'sellerId')
+
+    if (isErrorId(sellerId)) {
+        return httpResponse({}, sellerId)
+    }
+
     return httpResponse({
         id: sellerId,
         identification: "1234444511",
@@ -59,6 +73,11 @@ const getSellerById = (event) => {
 
 const getQrById = (event) => {
     const qrId = getPathParameter(event, 'qrId')
+
+    if (isErrorId(qrId)) {
+        return httpResponse({}, qrId)
+    }
+
     return httpResponse({
         id: qrId,
         enabled: true
@@ -68,16 +87,27 @@ const getQrById = (event) => {
 const getPaymentMethod = (event) => {
     const buyerId = getPathParameter(event, 'buyerId')
     const paymentMethodToken = getPathParameter(event, 'paymentMethodToken')
+
+    if (isErrorId(paymentMethodToken)) {
+        return httpResponse({}, paymentMethodToken)
+    }
+
     return httpResponse({
         id: 1,
         enabled: true,
-        securityCode: "123",
+        securityCode: '123',
         token: paymentMethodToken,
         type: "CREDIT"
     })
 }
 
 const authorizePayment = (event) => {
+    const { establishmentId } = getBody(event)
+
+    if(isErrorId(establishmentId)) {
+        return httpResponse({}, establishmentId)
+    }
+
     return httpResponse({
         id: uuid(),
         traceNumber: uuid(),
@@ -86,18 +116,10 @@ const authorizePayment = (event) => {
     })
 }
 
-const validateFraud = (event) => {
-    return httpResponse({
-        fraudValidationId: uuid(),
-        result: 'ALLOWED'
-    })
-}
-
 module.exports = {
     getBuyer: async (event) => getBuyerById(event),
     getSeller: async (event) => getSellerById(event),
     getQr: async (event) =>  getQrById(event),
     getPaymentMethod: async (event) => getPaymentMethod(event),
-    authorizePayment: async (event) => authorizePayment(event),
-    validateFraud: async (event)  => validateFraud(event)
+    authorizePayment: async (event) => authorizePayment(event)
 }

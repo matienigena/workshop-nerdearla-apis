@@ -53,13 +53,5 @@ functions:
           path: authorizations
           private: true
 
-  validateFraud:
-    handler: handler.validateFraud
-    events:
-      - http:
-          method: post
-          path: fraud
-          private: true
-
 plugins:
   - serverless-offline
